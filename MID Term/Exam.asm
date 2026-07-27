@@ -1,0 +1,59 @@
+.MODEL SMALL
+.STACK 100h
+.Data
+newline DB 0AH,0DH,24H
+MSG DB "ENTER Input: $",10,13
+MSG2 DB "Outputs: $"
+.code
+main proc
+ MOV AX,@DATA
+ MOV DS,AX
+ 
+ MOV AH,9
+ LEA DX,MSG
+ INT 21H
+ 
+ MOV AH,1
+ INT 21H 
+ MOV BL,AL
+ 
+ MOV AH,2
+ MOV DL,' '
+ INT 21H
+ 
+ MOV AH,1
+ INT 21H  
+ MOV CL,AL
+ 
+ MOV AH,9
+        
+ LEA DX,newline
+ INT 21H 
+ LEA DX,newline
+ INT 21H
+ 
+ LEA DX,MSG2
+ INT 21H 
+ 
+ SUB BL,20H
+ INC BL
+ 
+ DEC CL      
+    
+ 
+ MOV AH,2
+ MOV DL,BL
+ INT 21H
+ 
+ MOV DL,' '
+ INT 21H
+ 
+ MOV DL,CL
+ INT 21H
+ 
+ MOV AH,4CH
+ INT 21H
+ 
+ MAIN ENDP
+END MAIN
+ 

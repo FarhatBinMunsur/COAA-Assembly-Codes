@@ -1,0 +1,45 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+V1 DB 'A $'
+NEWLINE DB 10,13,24H
+MSG DB 'EXECUTING $'
+
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+
+    MOV AH,9
+    LEA DX,MSG
+    INT 21H
+    
+    MOV AH,9
+    LEA DX,NEWLINE
+    INT 21H
+    
+    MOV AH,2
+    MOV DL,"A"
+    INT 21H
+    
+    MOV AH,9
+    LEA DX,NEWLINE
+    INT 21H  
+    
+    MOV AH,9
+    LEA DX,MSG
+    INT 21H
+    
+    MOV AH,9
+    LEA DX,NEWLINE
+    INT 21H
+    
+    MOV AH,2
+    MOV DL,41H
+    INT 21H
+
+    MOV AH,4CH
+    INT 21H 
+    
+    MAIN ENDP
+END MAIN

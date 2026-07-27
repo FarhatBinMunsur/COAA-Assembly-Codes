@@ -1,0 +1,34 @@
+;1ST WAY FOR NEW LINE
+.MODEL SMALL
+.STACK 100H
+.DATA 
+A DB "HELLO World!$",
+B DB "HELLO$" 
+.CODE
+ MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+      
+    MOV AH,9
+    LEA DX,A
+    INT 21H 
+            
+ ;NEWLINE
+    MOV AH,2
+    ;MOV DL,0AH ;LF
+    MOV DL,10
+    INT 21H
+    ;MOV DL,0DH ;CR
+    MOV DL,13
+    INT 21H
+    
+    MOV AH,9
+    LEA DX,B
+    INT 21H
+    
+    ;EXIT
+    MOV AH,4CH
+    INT 21H
+    MAIN ENDP
+ END MAIN
+
