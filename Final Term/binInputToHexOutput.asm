@@ -1,0 +1,81 @@
+.MODEL SMALL
+.STACK 100
+
+.DATA
+
+INPUT  DB 'ENTER BINARY INPUT: $'
+OUTPUT DB 0AH,0DH,'HEXADECIMAL OUTPUT: $'
+
+.CODE
+
+MAIN PROC
+
+    MOV AX,@DATA
+    MOV DS,AX
+
+
+    XOR BX,BX
+
+    MOV CX,16
+
+WHILE_:
+
+    MOV AH,1
+    INT 21H
+
+    CMP AL,0DH
+    JE OUTPUT_HEX
+
+    AND AL,0FH
+
+    SHL BX,1
+    OR BL,AL
+
+    LOOP WHILE_
+
+
+OUTPUT_HEX:
+
+    mov ah,2
+    mov dl,0ah
+    int 21h
+    mov dl,0dh
+    int 21h
+    
+
+    MOV CX,4
+
+FOR2:
+
+    MOV DL,BH
+    SHR DL,4
+
+    ROL BX,4
+
+    CMP DL,10
+    JGE OUTPUTLETTER
+
+    ADD DL,30h
+    MOV AH,2
+    INT 21H
+
+    JMP DISPLAY
+
+
+OUTPUTLETTER:
+
+    ADD DL,37h
+    MOV AH,2
+    INT 21H
+
+
+DISPLAY:
+
+    LOOP FOR2
+
+    MOV AH,4CH
+    INT 21H
+
+MAIN ENDP
+
+END MAIN
